@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aura Gastronomica | Architecture of Taste</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Hanken+Grotesk:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Hanken Grotesk', sans-serif; background: #fdfdfc; color: #1c1c1c; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .bg-clay { background-color: #f4f1ee; }
+        .collage-grid { display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: repeat(6, 1fr); gap: 1rem; height: 100%; }
+        .img-1 { grid-area: 1 / 1 / 4 / 4; }
+        .img-2 { grid-area: 1 / 4 / 3 / 7; }
+        .img-3 { grid-area: 3 / 4 / 7 / 7; }
+        .img-4 { grid-area: 4 / 1 / 7 / 4; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <nav class="p-10 flex justify-between items-center max-w-[1600px] mx-auto w-full">
+        <div class="serif text-2xl font-black uppercase tracking-tighter">Aura <span class="italic text-[#8c7851]">Gastronomica</span></div>
+        <div class="flex gap-12 text-[10px] font-bold uppercase tracking-[0.4em]">
+            <a href="/web" class="bg-black text-white px-6 py-2 rounded-full">Launch Engine</a>
+        </div>
+    </nav>
+    <main class="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-0 min-h-[85vh]">
+        <div class="flex flex-col justify-center px-16 py-20 bg-clay">
+            <span class="text-[#8c7851] text-[10px] font-black uppercase tracking-[0.6em] mb-6">Established 2026</span>
+            <h1 class="serif text-8xl lg:text-9xl leading-[0.85] mb-12">Fine <br>Dining <br><span class="italic font-normal">Simplified.</span></h1>
+            <p class="text-xl text-gray-500 font-light leading-relaxed max-w-sm mb-12">Decoding flavor profiles to predict your next obsession.</p>
+            <a href="/web" class="inline-block bg-black text-white px-12 py-5 text-[11px] font-bold uppercase tracking-[0.5em] self-start transition-all hover:bg-[#8c7851]">Analyze Palate</a>
+        </div>
+        <div class="p-10 bg-white">
+            <div class="collage-grid">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=600" class="img-1 w-full h-full object-cover grayscale">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=600" class="img-2 w-full h-full object-cover">
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=600" class="img-3 w-full h-full object-cover grayscale">
+                <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&q=80&w=600" class="img-4 w-full h-full object-cover">
+            </div>
+        </div>
+    </main>
+</body>
+</html>

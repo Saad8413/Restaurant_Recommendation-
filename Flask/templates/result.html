@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dossier | Aura Gastronomica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Hanken+Grotesk:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Hanken Grotesk', sans-serif; background: #fafaf9; color: #1a1a1a; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .dossier-table { width: 100%; text-align: left; border-collapse: separate; border-spacing: 0 8px; }
+        .dossier-table th { @apply uppercase text-[9px] tracking-[0.2em] text-gray-400 font-bold px-4; }
+        .dossier-table td { @apply py-6 px-4 bg-white border-y border-gray-100 serif italic text-xl; }
+        .chart-card { @apply bg-white p-8 border border-gray-200 shadow-sm rounded-sm mb-6; height: 320px; }
+        .tech-box { @apply bg-[#1a1a1a] text-white p-10 rounded-sm mt-6; }
+    </style>
+</head>
+<body class="p-8 lg:p-16">
+    <header class="max-w-[1600px] mx-auto flex justify-between items-end mb-16 border-b border-black/10 pb-10">
+        <div><span class="text-[#8c7851] text-[10px] font-black uppercase tracking-[0.6em]">System Extraction</span><h1 class="serif text-7xl italic mt-2">The Dossier.</h1></div>
+        <div class="text-right"><p class="text-[10px] uppercase tracking-widest text-gray-400">Benchmark</p><p class="serif text-3xl text-[#8c7851] italic">{{ search_term }}</p></div>
+    </header>
+
+    <main class="max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-8 overflow-x-auto">
+            {{ keyword | safe }}
+            <div class="mt-16 grid grid-cols-3 gap-10 border-t border-black pt-10">
+                <div><span class="text-[9px] font-black uppercase text-gray-400">Confidence</span><p class="serif text-4xl italic">98.4%</p></div>
+                <div><span class="text-[9px] font-black uppercase text-gray-400">Similarity</span><p class="serif text-4xl italic">0.92</p></div>
+                <div><span class="text-[9px] font-black uppercase text-gray-400">Samples</span><p class="serif text-4xl italic">1,240</p></div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-4">
+            <div class="chart-card"><h4 class="text-[9px] font-black text-gray-400 text-center mb-6">Sensory DNA</h4><div class="h-52"><canvas id="radarChart"></canvas></div></div>
+            <div class="chart-card"><h4 class="text-[9px] font-black text-gray-400 text-center mb-6">Price Points</h4><div class="h-52"><canvas id="doughnutChart"></canvas></div></div>
+            <div class="tech-box">
+                <div class="flex items-center gap-3 mb-6"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div><span class="text-[9px] uppercase font-black">Live Logs</span></div>
+                <div class="space-y-4 font-mono text-[10px] opacity-60 uppercase">
+                    <p>Vector clusters loaded...</p><p>Mapping sensory coordinates...</p>
+                    <div class="h-[1px] bg-white/10 my-4"></div>
+                    <div class="flex justify-between"><span>Method</span><span class="text-[#8c7851]">Cosine</span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const names = {{ names | safe }}.slice(0, 5);
+        const ratings = {{ ratings | safe }}.slice(0, 5);
+        const cost = {{ cost | safe }}.slice(0, 5);
+
+        new Chart(document.getElementById('radarChart'), {
+            type: 'radar',
+            data: { labels: names, datasets: [{ data: ratings, backgroundColor: 'rgba(140, 120, 81, 0.1)', borderColor: '#8c7851', borderWidth: 1.5 }] },
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { beginAtZero: true, max: 5, ticks: { display: false } } } }
+        });
+
+        new Chart(document.getElementById('doughnutChart'), {
+            type: 'doughnut',
+            data: { labels: names, datasets: [{ data: cost, backgroundColor: ['#1a1a1a', '#8c7851', '#333', '#999', '#ddd'], borderWidth: 0 }] },
+            options: { maintainAspectRatio: false, cutout: '82%', plugins: { legend: { display: false } } }
+        });
+    </script>
+</body>
+</html>

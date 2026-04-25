@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inference Studio | Aura Gastronomica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Hanken+Grotesk:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; background: #000; color: #ffffff; font-family: 'Hanken Grotesk', sans-serif; height: 100%; width: 100%; overflow: hidden; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .bg-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; z-index: 1; opacity: 0.25; }
+        .bg-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+        .vignette { position: fixed; inset: 0; background: radial-gradient(circle, transparent 20%, #000 100%); z-index: 2; pointer-events: none; }
+        .ui-layer { position: relative; z-index: 10; height: 100vh; display: flex; flex-direction: column; }
+        .search-card { background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.1); padding: 4rem; width: 100%; max-width: 600px; }
+    </style>
+</head>
+<body>
+    <div class="bg-wrapper">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&w=800">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&w=800">
+        <img src="https://images.unsplash.com/photo-1550966842-28ca9298495a?auto=format&w=800">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&w=800">
+    </div>
+    <div class="vignette"></div>
+    <div class="ui-layer">
+        <nav class="p-10 max-w-[1600px] mx-auto w-full flex justify-between items-center">
+            <a href="/" class="serif text-2xl italic text-white">A.G</a>
+            <a href="/" class="text-[10px] uppercase tracking-widest text-gray-500">Exit</a>
+        </nav>
+        <main class="flex-grow flex items-center justify-center p-6">
+            <div class="search-card text-center rounded-sm">
+                <span class="text-[#8c7851] text-[9px] font-black uppercase tracking-[0.7em] mb-6 block">Sensory Analysis Engine</span>
+                <h1 class="serif text-6xl text-white italic mb-12">Inference Studio</h1>
+                <form action="/result" method="POST" autocomplete="off" class="space-y-12">
+                    <div class="relative">
+                        <input type="text" name="output" id="output" class="w-full bg-transparent border-b border-white/10 py-4 text-2xl text-center text-white focus:outline-none focus:border-[#8c7851] serif italic" placeholder="Benchmark Venue">
+                        <div id="suggestions" class="absolute w-full mt-2 bg-[#111] shadow-2xl z-50 text-left border border-white/5 max-h-48 overflow-y-auto"></div>
+                    </div>
+                    <button type="submit" class="w-full bg-white text-black py-5 text-[10px] font-black uppercase tracking-[0.5em] hover:bg-[#8c7851] hover:text-white transition-all">Map Profile</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script>
+        const input = document.getElementById('output');
+        const suggest = document.getElementById('suggestions');
+        input.addEventListener('input', async function() {
+            if(!this.value) return suggest.innerHTML = "";
+            const res = await fetch(`/autocomplete?term=${this.value}`);
+            const data = await res.json();
+            suggest.innerHTML = data.map(item => `<div class="p-4 hover:bg-[#8c7851] hover:text-white cursor-pointer border-b border-white/5 transition text-sm font-light">${item}</div>`).join('');
+            Array.from(suggest.children).forEach((div, i) => {
+                div.onclick = () => { input.value = data[i]; suggest.innerHTML = ""; };
+            });
+        });
+    </script>
+</body>
+</html>
